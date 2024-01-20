@@ -2,6 +2,7 @@ import "./Homepage.css";
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 
 const Homepage = () => {
   const {
@@ -13,13 +14,7 @@ const Homepage = () => {
 
   const [error, setError] = useState(false)
 
-
-  const [city, setCity] = useState('')
-  const [name, setName ] = useState('')
-  const [sex, setSex ] = useState('')
-  const [job, setJob] = useState('')
-  const [language, setLanguage] = useState('')
-  console.log(city, name, sex, job, language);
+  const navigate = useNavigate()
 
 
 
@@ -29,21 +24,9 @@ const Homepage = () => {
         "https://codify-teens.vercel.app/login/",
         data
       );
-      console.log(response.data);
+      localStorage.setItem('data', JSON.stringify(response.data.user))
       reset();
-      localStorage.setItem('city', response.data.user.city)
-      localStorage.setItem('name', response.data.user.fullName)
-      localStorage.setItem('sex', response.data.user.sex)
-      localStorage.setItem('job', response.data.user.job)
-      localStorage.setItem('language', response.data.user.language)
-
-      setCity(localStorage.getItem('city'));
-      setName(localStorage.getItem('name'));
-      setSex(localStorage.getItem('sex'));
-      setJob(localStorage.getItem('job'));
-      setLanguage(localStorage.getItem('language'));
-
-
+      navigate('/characters')
     } catch (e) {
       console.log(e.response.data.message);
       setError(true)
@@ -83,15 +66,8 @@ const Homepage = () => {
         <button>Login</button>
       </form>
       {error && ( <div><h3>Неверный логин или пароль!</h3></div> )}
-      <div className="info">
-      { <div>{city}</div> }
-      { <div>{name}</div> }
-      { <div>{sex}</div> }
-      { <div>{job}</div> }
-      { <div>{language}</div> }
-      </div>
       
-
+    
     </div>
   );
 };
