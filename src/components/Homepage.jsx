@@ -35,7 +35,7 @@ const Homepage = () => {
 
 
   return (
-    <div>
+    <div className="pre-form">
       <form onSubmit={handleSubmit(Submit)} className="form">
         <h1>Sign in</h1>
         <input type="text" placeholder="Login" 
